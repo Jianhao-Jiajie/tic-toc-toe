@@ -2,12 +2,11 @@ status = '123456789'
 i = 1
 
 def updateBoard():
-
     board = f"{status[0]}|{status[1]}|{status[2]}\n{status[3]}|{status[4]}|{status[5]}\n{status[6]}|{status[7]}|{status[8]}"
     print(board)
 
+#change turnNumber to the player name O or X
 def playerName(turn):
-    
     if turn == 1:
         return "X"
     else:
@@ -28,12 +27,11 @@ def playGame():
     updateBoard()
     playerTurn = 1
     
-    #check if input is valid
     global i
     global status
     while i < 10:
         temp = (input(f'{playerName(playerTurn)} Turn:'))
-
+#check if input is valid
         if not temp.isdigit() or status[int(temp)-1] != temp:
             print('invalid')
         elif playerTurn == 1:
@@ -48,18 +46,20 @@ def playGame():
             status = status.replace(str(temp), 'O')
             i +=1
             updateBoard() 
-    
+#check slant winning
         if status[0] == status[4] == status[8] or status[2] == status[4] == status[6]:
             print(f"{playerName(playerTurn%2 + 1)} wins")
             i = 11
+#check vertical winning
         if len(set(status[0::3]))== 1 or len(set(status[1::3]))== 1 or len(set(status[2::3]))== 1 :
             print(f"{playerName(playerTurn%2 + 1)} wins")
             i = 11
+#check horizontal winning
         if len(set(status[0:3]))== 1 or len(set(status[3:6]))== 1 or len(set(status[6:9]))== 1 :
             print(f"{playerName(playerTurn%2 + 1)} wins")
             i = 11
         if i == 10:
-            print("ties")
+            print("Game Tied")
     restart()
 
 playGame()
